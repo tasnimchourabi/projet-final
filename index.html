@@ -88,6 +88,33 @@
 </div>  
 </section>
 </section>
+<section>
+  <div class="packs">
+      <div class="cardd">
+          <h2>Pack Silver</h2>
+          <p>Price: $50</p>
+          <button class="add-to-cart" data-price="50">Add to Cart</button>
+      </div>
+      
+      <div class="cardd">
+          <h2>Pack Gold</h2>
+          <p>Price: $80</p>
+          <button class="add-to-cart" data-price="80">Add to Cart</button>
+      </div>
+      
+      <div class="cardd">
+          <h2>Pack Platinum</h2>
+          <p>Price: $100</p>
+          <button class="add-to-cart" data-price="100">Add to Cart</button>
+      </div>
+  </div>
+</section>
+<div class="cart">
+  <h2>Cart</h2>
+  <div class="selected-packs">
+  </div>
+  <p>Total Price: $<span id="total-price">0</span></p>
+</div>
 <footer class="footer body1">
   <div class="footer-content">
       <h4>Contact Information</h4>
@@ -98,19 +125,29 @@
       <p>Email: info@titansgym.com</p>
   </div>
 </footer>
-<script>
-  function displayMessage(cardType) {
-      if (cardType === 'about') {
-          alert("About Titans Gym: Titans Gym is a premier fitness center offering state-of-the-art facilities and personalized training programs.");
-      } else if (cardType === 'history') {
-          alert("History: Established in 2005, Titans Gym has been a pioneer in the fitness industry, catering to fitness enthusiasts of all levels.");
-      } else if (cardType === 'popularity') {
-          alert("Popularity: Titans Gym has gained immense popularity for its top-notch equipment, expert trainers, and diverse workout programs.");
-      }
-  }
- 
-  
+<script >
+  const addToCartButtons = document.querySelectorAll('.add-to-cart');
+const totalPriceElement = document.getElementById('total-price');
+const selectedPacksElement = document.querySelector('.selected-packs');
+let totalPrice = 0;
+const selectedPacks = [];
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const packName = button.previousElementSibling.previousElementSibling.textContent;
+        const price = parseInt(button.dataset.price);
+        selectedPacks.push({ name: packName, price: price });
+        selectedPacksElement.innerHTML = selectedPacks.map(pack => `<p>${pack.name} - $${pack.price}</p>`).join('');
+        totalPrice += price;
+        totalPriceElement.textContent = totalPrice;
+    });
+});
+document.querySelectorAll('.list a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        animatePage(href);
+    });
+});
 </script>
-<script src="script.js"></script>
 </body>
 </html>
